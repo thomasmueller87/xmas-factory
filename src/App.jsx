@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import styled from "styled-components";
+import Product from "./components/Product";
 
 function App() {
   const initialProduct = {
@@ -125,17 +126,15 @@ function App() {
         </form>
 
         {products.map((product, index) => (
-          <section>
-            <p>Item# {index + 1}</p>
-            <h3>{product.name}</h3>
-            <p>
-              {product.price} EUR // {product.isVegan ? "Veggie" : "Not vegan"}
-            </p>
-            <p>
-              Category {product.category} // Package Size: {product.packageSize}
-            </p>
-            <p>Your E-Mail: {product.email}</p>
-          </section>
+          <Product
+            key={index}
+            name={product.name}
+            price={product.price}
+            isVegan={product.isVegan}
+            category={product.category}
+            packageSize={product.packageSize}
+            email={product.email}
+          />
         ))}
       </Container>
     </>
@@ -144,10 +143,7 @@ function App() {
 export default App;
 const Container = styled.div`
   max-width: 25rem;
-  margin: auto;
-  form {
-    padding: 2rem;
-  }
+
   label {
     display: block;
     margin-bottom: 10px;
