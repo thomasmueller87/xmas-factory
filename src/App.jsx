@@ -41,9 +41,9 @@ function App() {
   return (
     <>
       <Container className="App">
-        <h2>Weihnachts-Store</h2>
+        <h1>Wünsch Dir Was!</h1>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="name">Productname: </label>
+          <label htmlFor="name">Produkt: </label>
           <input
             type="text"
             name="name"
@@ -51,7 +51,7 @@ function App() {
             onChange={handleChange}
             value={product.name}
           />
-          <label htmlFor="price">Price: </label>
+          <label htmlFor="price">Wunschpreis: </label>
           <input
             type="text"
             name="price"
@@ -69,7 +69,7 @@ function App() {
               checked={product.isVegan}
             />
           </label>
-          <label htmlFor="category">Category: </label>
+          <label htmlFor="category">Kategorie: </label>
           <select
             name="category"
             id="category"
@@ -84,7 +84,7 @@ function App() {
             <option value="tools">Tools</option>
           </select>
           <label htmlFor="packageSize" className="package">
-            Package size:
+            Paketgröße:
             <label htmlFor="packageSize">S</label>
             <input
               type="radio"
@@ -113,7 +113,7 @@ function App() {
               checked={product.packageSize === "L"}
             />
           </label>
-          <label htmlFor="email">Email: </label>
+          <label htmlFor="email">Deine Email für Rückfragen: </label>
           <input
             type="text"
             name="email"
@@ -121,13 +121,16 @@ function App() {
             onChange={handleChange}
             value={product.email}
           />
-          <button>Add product</button>
-          <input type="reset" value="reset" onClick={handleReset} />
+          <div>
+            <button>Add product</button>
+            <input type="reset" value="reset" onClick={handleReset} />
+          </div>
         </form>
 
         {products.map((product, index) => (
           <Product
             key={index}
+            index={index}
             name={product.name}
             price={product.price}
             isVegan={product.isVegan}
@@ -143,6 +146,9 @@ function App() {
 export default App;
 const Container = styled.div`
   max-width: 25rem;
+  color: white;
+  h2 {
+  }
 
   label {
     display: block;
