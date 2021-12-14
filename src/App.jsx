@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import styled from "styled-components";
 import Product from "./components/Product";
+import ProductTags from "./components/ProductTags";
 
 function App() {
   const initialProduct = {
@@ -16,6 +17,19 @@ function App() {
   const [product, setProduct] = useState(initialProduct);
 
   const [products, setProducts] = useState([]);
+
+  const [tags, setTags] = useState(["ONE", "TWO"]);
+
+  function updateTags(tag) {
+    setTags([...tags, tag]);
+  }
+
+  function handleDelete(tagToDelete) {
+    const newArray = tags.filter((tag) => {
+      return tag !== tagToDelete;
+    });
+    setTags(newArray);
+  }
 
   const handleChange = (event) => {
     let inputValue = event.target.value;
@@ -139,6 +153,13 @@ function App() {
             email={product.email}
           />
         ))}
+
+        <ProductTags
+          label="Product TagZZZZZ"
+          tags={tags}
+          onDelete={handleDelete}
+          onUpdateTags={updateTags}
+        />
       </Container>
     </>
   );
