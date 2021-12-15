@@ -3,6 +3,7 @@ import "./App.css";
 import styled from "styled-components";
 import Product from "./components/Product";
 import ProductTags from "./components/ProductTags";
+import isValid from "./lib/validation";
 
 function App() {
   const initialProduct = {
@@ -45,24 +46,6 @@ function App() {
     });
   };
 
-  const checkProductMinLength = (name, stringLength) =>
-    name.length > stringLength;
-
-  const isPriceValid = (price) => price > 0;
-  const hasValidCategory = (category) => category !== "";
-
-  const isValidEmail = (email) =>
-    email.includes("@") && email.split("@")[1].includes(".");
-
-  function isValid() {
-    return (
-      checkProductMinLength(product.name, 3) &&
-      isPriceValid(product.price) &&
-      hasValidCategory(product.category) &&
-      isValidEmail(product.email)
-    );
-  }
-
   const handleSubmit = (event) => {
     event.preventDefault();
     //Prüfung ob etwas eingegeben wurde
@@ -77,7 +60,7 @@ function App() {
   return (
     <>
       <Container className="App">
-        <h1>Wünsch Dir Was!</h1>
+        <h1>Wünsch Dir Was!❤️</h1>
         <form onSubmit={handleSubmit}>
           <label htmlFor="name">Produkt: </label>
           <input
