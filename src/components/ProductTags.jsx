@@ -25,8 +25,8 @@ function ProductTags({ label, tags, onDelete, onUpdateTags }) {
     <TagsContainer>
       <label htmlFor="tags">{label}</label>
       <TagsWrapper>
-        {tags.map((tag) => (
-          <TagsStyle>
+        {tags.map((tag, index) => (
+          <TagsStyle key={index}>
             {tag}{" "}
             <DeleteX
               onClick={() => {

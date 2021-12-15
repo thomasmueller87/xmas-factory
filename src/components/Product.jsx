@@ -8,6 +8,7 @@ function Product({
   category,
   packageSize,
   email,
+  tags,
 }) {
   return (
     <>
@@ -22,6 +23,7 @@ function Product({
             Category {category} // Package Size: {packageSize}
           </DataStyle>
           <DataStyle>Your E-Mail: {email}</DataStyle>
+          <div>{tags.sort().join(", ")}</div>
         </WhiteBorder>
       </SectionStyle>{" "}
     </>

@@ -9,6 +9,7 @@ function App() {
     name: "",
     price: "",
     isVegan: false,
+    tags: [],
     category: "",
     packageSize: "",
     email: "",
@@ -18,17 +19,16 @@ function App() {
 
   const [products, setProducts] = useState([]);
 
-  const [tags, setTags] = useState(["ONE", "TWO"]);
-
   function updateTags(tag) {
-    setTags([...tags, tag]);
+    const updatedTags = [...product.tags, tag];
+    setProduct({ ...product, tags: updatedTags });
   }
 
   function handleDelete(tagToDelete) {
-    const newArray = tags.filter((tag) => {
+    const newArray = product.tags.filter((tag) => {
       return tag !== tagToDelete;
     });
-    setTags(newArray);
+    setProduct({ ...product, tags: newArray });
   }
 
   const handleChange = (event) => {
@@ -151,12 +151,13 @@ function App() {
             category={product.category}
             packageSize={product.packageSize}
             email={product.email}
+            tags={product.tags}
           />
         ))}
 
         <ProductTags
           label="Product TagZZZZZ"
-          tags={tags}
+          tags={product.tags}
           onDelete={handleDelete}
           onUpdateTags={updateTags}
         />
