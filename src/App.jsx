@@ -44,10 +44,32 @@ function App() {
       [event.target.name]: inputValue,
     });
   };
+
+  const checkProductMinLength = (name, stringLength) =>
+    name.length > stringLength;
+
+  const isPriceValid = (price) => price > 0;
+  const hasValidCategory = (category) => category !== "";
+
+  const isValidEmail = (email) =>
+    email.includes("@") && email.split("@")[1].includes(".");
+
+  function isValid() {
+    return (
+      checkProductMinLength(product.name, 3) &&
+      isPriceValid(product.price) &&
+      hasValidCategory(product.category) &&
+      isValidEmail(product.email)
+    );
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    setProducts([...products, product]);
+    //Prüfung ob etwas eingegeben wurde
+    if (isValid()) {
+      setProducts([...products, product]);
+      setProduct(initialProduct);
+    }
   };
   const handleReset = () => {
     setProduct(initialProduct);
@@ -127,6 +149,12 @@ function App() {
               checked={product.packageSize === "L"}
             />
           </label>
+          <ProductTags
+            label="Product TagZZZZZ"
+            tags={product.tags}
+            onDelete={handleDelete}
+            onUpdateTags={updateTags}
+          />
           <label htmlFor="email">Deine Email für Rückfragen: </label>
           <input
             type="text"
@@ -154,13 +182,6 @@ function App() {
             tags={product.tags}
           />
         ))}
-
-        <ProductTags
-          label="Product TagZZZZZ"
-          tags={product.tags}
-          onDelete={handleDelete}
-          onUpdateTags={updateTags}
-        />
       </Container>
     </>
   );
