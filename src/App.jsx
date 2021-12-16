@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import styled from "styled-components";
 import Product from "./components/Product";
 import ProductTags from "./components/ProductTags";
 import isValid from "./lib/validation";
+import { saveToLocal, loadFromLocal } from "./lib/localStorage";
 
 function App() {
   const initialProduct = {
@@ -15,10 +16,16 @@ function App() {
     packageSize: "",
     email: "",
   };
-
+  const localStorageProduct = loadFromLocal("_products");
   const [product, setProduct] = useState(initialProduct);
 
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(localStorageProduct ?? []);
+
+  //Speichern im LocalStorage
+
+  useEffect(() => {
+    saveToLocal("_products", products);
+  }, [products]);
 
   function updateTags(tag) {
     const updatedTags = [...product.tags, tag];
@@ -49,7 +56,7 @@ function App() {
   const handleSubmit = (event) => {
     event.preventDefault();
     //Prüfung ob etwas eingegeben wurde
-    if (isValid()) {
+    if (isValid(product)) {
       setProducts([...products, product]);
       setProduct(initialProduct);
     }

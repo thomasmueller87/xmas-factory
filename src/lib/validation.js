@@ -7,7 +7,7 @@ const hasValidCategory = (category) => category !== "";
 const isValidEmail = (email) =>
   email.includes("@") && email.split("@")[1].includes(".");
 
-function isValid() {
+function isValid(product) {
   return (
     checkProductMinLength(product.name, 3) &&
     isPriceValid(product.price) &&
