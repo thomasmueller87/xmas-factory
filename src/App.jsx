@@ -8,17 +8,40 @@ import { saveToLocal, loadFromLocal } from "./lib/localStorage";
 
 function App() {
   const localStorageProduct = loadFromLocal("_products");
+  const localStorageFav = loadFromLocal("_favorites");
 
   const [products, setProducts] = useState(localStorageProduct ?? []);
+  const [favProducts, setFavProducts] = useState(localStorageFav ?? []);
+
+  function isFavProduct(favProduct) {
+    return favProducts.some((every) => every.id === favProduct.id);
+  }
+
+  function remFromFav(favProduct) {
+    return favProducts.filter((every) => every.id !== favProduct.id);
+  }
 
   function addProduct(newProduct) {
     return setProducts([...products, newProduct]);
+  }
+
+  function addToFavorites(favProduct) {
+    if (isFavProduct(favProduct)) {
+      const keepFavorite = remFromFav(favProduct);
+      setFavProducts(keepFavorite);
+    } else {
+      setFavProducts([...favProducts, favProduct]);
+    }
   }
   //Speichern im LocalStorage
 
   useEffect(() => {
     saveToLocal("_products", products);
   }, [products]);
+
+  useEffect(() => {
+    saveToLocal("_favorites", favProducts);
+  }, [favProducts]);
 
   return (
     <>
@@ -27,6 +50,7 @@ function App() {
 
         {products.map((product, index) => (
           <Product
+            product={product}
             key={index}
             index={index}
             name={product.name}
@@ -36,6 +60,8 @@ function App() {
             packageSize={product.packageSize}
             email={product.email}
             tags={product.tags}
+            onAddToFavorites={addToFavorites}
+            onIsFavProduct={isFavProduct}
           />
         ))}
       </Container>

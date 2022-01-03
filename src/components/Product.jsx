@@ -9,6 +9,9 @@ function Product({
   packageSize,
   email,
   tags,
+  onAddToFavorites,
+  product,
+  onIsFavProduct,
 }) {
   return (
     <>
@@ -24,6 +27,9 @@ function Product({
           </DataStyle>
           <DataStyle>Your E-Mail: {email}</DataStyle>
           <div>{tags.sort().join(", ")}</div>
+          <Star onClick={() => onAddToFavorites(product)}>
+            {onIsFavProduct(product) ? "⭐️" : "✩"}
+          </Star>
         </WhiteBorder>
       </SectionStyle>{" "}
     </>
@@ -58,4 +64,9 @@ const DataStyle = styled.p`
   background: rgba(255, 255, 255, 0.3);
   padding: 0.2rem;
   border-radius: 5px;
+`;
+
+const Star = styled.span`
+  cursor: pointer;
+  font-size: 2rem;
 `;

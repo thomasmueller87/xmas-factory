@@ -1,16 +1,17 @@
-import { useState } from "react";
-import ProductTags from "./ProductTags";
-import isValid from "../lib/validation";
+import { useState } from 'react';
+import ProductTags from './ProductTags';
+import isValid from '../lib/validation';
+import { v4 as uuidv4 } from 'uuid';
 
 function Form({ onAddProduct }) {
   const initialProduct = {
-    name: "",
-    price: "",
+    name: '',
+    price: '',
     isVegan: false,
     tags: [],
-    category: "",
-    packageSize: "",
-    email: "",
+    category: '',
+    packageSize: '',
+    email: '',
   };
 
   const [product, setProduct] = useState(initialProduct);
@@ -24,10 +25,10 @@ function Form({ onAddProduct }) {
 
   const handleChange = (event) => {
     let inputValue = event.target.value;
-    if (event.target.type === "checkbox") {
+    if (event.target.type === 'checkbox') {
       inputValue = event.target.checked;
     }
-    if (event.target.name === "price") {
+    if (event.target.name === 'price') {
       inputValue = Number(inputValue);
     }
     setProduct({
@@ -40,8 +41,9 @@ function Form({ onAddProduct }) {
     event.preventDefault();
     //Prüfung ob etwas eingegeben wurde
     if (isValid(product)) {
-      onAddProduct(product);
-      setProduct(initialProduct);
+      onAddProduct({ id: uuidv4(), ...product });
+      //Setzt das Formular zurück
+      //setProduct(initialProduct);
     }
   };
 
@@ -58,93 +60,99 @@ function Form({ onAddProduct }) {
     <>
       <h1>Wünsch Dir Was!❤️</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Produkt: </label>
+        <label htmlFor='name'>Produkt: </label>
         <input
-          type="text"
-          name="name"
-          id="name"
+          type='text'
+          name='name'
+          id='name'
           onChange={handleChange}
           value={product.name}
         />
-        <label htmlFor="price">Wunschpreis: </label>
+        <label htmlFor='price'>Wunschpreis: </label>
         <input
-          type="text"
-          name="price"
-          id="price"
+          type='text'
+          name='price'
+          id='price'
           onChange={handleChange}
           value={product.price}
         />
         <label>
           vegan:
           <input
-            type="checkbox"
-            name="isVegan"
-            id="isVegan"
+            type='checkbox'
+            name='isVegan'
+            id='isVegan'
             onChange={handleChange}
             checked={product.isVegan}
           />
         </label>
-        <label htmlFor="category">Kategorie: </label>
+        <label htmlFor='category'>Kategorie: </label>
         <select
-          name="category"
-          id="category"
+          name='category'
+          id='category'
           onChange={handleChange}
           value={product.category}
         >
-          <option value="" disabled>
+          <option value='' disabled>
             ...choose a category
           </option>
-          <option value="drinks">Drinks</option>
-          <option value="food">Food</option>
-          <option value="tools">Tools</option>
+          <option value='drinks'>Drinks</option>
+          <option value='food'>Food</option>
+          <option value='tools'>Tools</option>
         </select>
-        <label htmlFor="packageSize" className="package">
+        <label htmlFor='packageSize' className='package'>
           Paketgröße:
-          <label htmlFor="packageSize">S</label>
+          <label htmlFor='packageSize'>S</label>
           <input
-            type="radio"
-            name="packageSize"
-            id="packageSize"
-            value="S"
+            type='radio'
+            name='packageSize'
+            id='packageSize'
+            value='S'
             onChange={handleChange}
-            checked={product.packageSize === "S"}
+            checked={product.packageSize === 'S'}
           />
-          <label htmlFor="packageSize">M</label>
+          <label htmlFor='packageSize'>M</label>
           <input
-            type="radio"
-            name="packageSize"
-            id="packageSize"
-            value="M"
+            type='radio'
+            name='packageSize'
+            id='packageSize'
+            value='M'
             onChange={handleChange}
-            checked={product.packageSize === "M"}
+            checked={product.packageSize === 'M'}
           />
-          <label htmlFor="packageSize">L</label>
+          <label htmlFor='packageSize'>L</label>
           <input
-            type="radio"
-            name="packageSize"
-            id="packageSize"
-            value="L"
+            type='radio'
+            name='packageSize'
+            id='packageSize'
+            value='L'
             onChange={handleChange}
-            checked={product.packageSize === "L"}
+            checked={product.packageSize === 'L'}
           />
         </label>
         <ProductTags
-          label="Product TagZZZZZ"
+          label='Product TagZZZZZ'
           tags={product.tags}
           onDelete={handleDelete}
           onUpdateTags={updateTags}
         />
-        <label htmlFor="email">Deine Email für Rückfragen: </label>
+        <label htmlFor='email'>
+          Deine Email für Rückfragen:{' '}
+        </label>
         <input
-          type="text"
-          name="email"
-          id="email"
+          type='text'
+          name='email'
+          id='email'
           onChange={handleChange}
           value={product.email}
         />
         <div>
           <button>Add product</button>
-          <input type="reset" value="reset" onClick={handleReset} />
+          <input
+            type='reset'
+            value='reset'
+            onClick={handleReset}
+          />
         </div>
       </form>
     </>
